@@ -32,8 +32,7 @@ EXPECTED = { "event_addr":('1.2.3.4', 9090), \
              "control_sock":"control.sock", \
              "workers":4, \
              "sink":"syslog", \
-             "verbosity":1, \
-             "map_path":None}
+             "verbosity":1 }
 
 class TestConfig(unittest.TestCase):
     def test_parse(self):
@@ -41,7 +40,7 @@ class TestConfig(unittest.TestCase):
         self.assertTrue(conf)
 
         # get class fields
-        fields = list(filter(lambda x: not x[:2] == "__", dir(conf)))
+        fields = filter(lambda x: not x[:2] == "__", dir(conf))
         for f in fields:
             self.assertEqual(EXPECTED[f], getattr(conf, f))
 

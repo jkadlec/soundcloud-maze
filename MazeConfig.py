@@ -1,13 +1,12 @@
 # A fitting copyright should be put here.
 
 import configparser
-import pickle
 
-class MazeConfig():
+class MazeConfig(object):
 
     """Configuration for Follower Maze server. Uses simple ConfigParser format.
        
-       Fields:
+       Attributes:
            event_addr:     tuple with event listener address and port.
            client_addr:    tuple with client listener address and port.
            control_sock:   path to server control unix socket.
@@ -32,10 +31,6 @@ class MazeConfig():
         self.q_size = int(system["max_queue_size"])
         self.workers = int(system["workers"])
         self.control_sock = system["control_socket"]
-        if "follower_map" in system:
-            self.map_path = pickle.load(system["follower_map"])
-        else:
-            self.map_path = None
 
         log = parser["log"]
         self.verbosity = int(log["verbosity"])
