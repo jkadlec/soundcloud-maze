@@ -23,10 +23,13 @@ class MazeServer(object):
 
     def add_client(self, transport, data):
         sp = data.splitlines()
-        self.users[int(sp[0])] = transport
+        client_id = int(sp[0])
+        self.users[client_id] = transport
+        return client_id
 
     def remove_client(self, client_id):
-        self.users.pop(client_id)
+        if client_id in self.users:
+            self.users.pop(client_id)
 
     def reset(self):
         self._setup(self.conf)
