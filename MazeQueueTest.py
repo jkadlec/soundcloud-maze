@@ -3,7 +3,7 @@
 # A fitting copyright should be put here.
 
 from MazeQueue import *
-from MazeEvent import *
+from MazeEvent import * #TODO no-go
 import unittest, unittest.mock
 
 Q_SIZE = 8
@@ -29,7 +29,17 @@ class TestQueue(unittest.TestCase):
                 added.append(ev.seq)
             # check that whole batch has been called
             for seq in added:
-                users[seq].send.assert_called_with(create_payload(seq))
+                users[seq].write.assert_called_with(create_payload(seq))
+
+    def test_overfill(self):
+        q = MazeQueue(4)
+        items = [ unittest.mock.Mock(seq = i) for i in [2, 6] ]
+        for i in items:
+            q.add_and_process(i, {}, {})
+
+        # test that both items have been dispatched
+        for i in items:
+            i.dispatch.assert_called()
 
 if __name__ == '__main__':
     unittest.main()

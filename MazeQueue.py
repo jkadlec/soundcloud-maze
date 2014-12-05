@@ -15,9 +15,6 @@ class MazeQueue(object):
         self.q = [None] * max_size
 
     def add_and_process(self, item, followers, users):
-        if (not getattr(item, "seq")) or (item.seq <= 0):
-            raise KeyError
-
         # TODO not pretty
         index = MazeQueue.ModIndex(self.max_size, item.seq)
         current = self.q[index.val]
