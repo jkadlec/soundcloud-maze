@@ -56,11 +56,11 @@ class StatusEvent(MazeEvent):
         src = self.src
         if src in followers:
             for user_id in followers[src].keys():
-                send_payload(user_id, self.payload)
+                send_payload(user_id, users, self.payload)
 
 class BroadcastEvent(MazeEvent):
     def dispatch(self, followers, users):
-        for u in users:
+        for u in users.values():
             u.send(self.payload)
 
 EVENT_MAP = {'F':FollowEvent,
