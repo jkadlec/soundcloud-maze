@@ -3,9 +3,9 @@
 import asyncio
 import sys
 
-import mazeconfig
-import mazeserver
-import mazeprotocol
+import maze.mazeconfig as mazeconfig
+import maze.mazeserver as mazeserver
+import maze.mazeprotocol as mazeprotocol
 
 def main():
     if not len(sys.argv) == 3:
