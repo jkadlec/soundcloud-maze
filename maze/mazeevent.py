@@ -42,6 +42,7 @@ class UnfollowEvent(FollowEvent):
 class MsgEvent(MazeEvent):
     def __init__(self, src, dst, **kwargs):
         super().__init__(**kwargs)
+        # ignore src, not needed for dispatch
         self.dst = dst
 
     def dispatch(self, followers, users):
@@ -71,20 +72,20 @@ EVENT_MAP = {'F':FollowEvent,
 
 class MazeEventFactory(object):
     class EventParser(object):
-        def __init__(self, delimiter, newline, encoding):
+        def __init__(self, delimiter, newlines, encoding):
             self.delimiter = delimiter
             self.encoding = encoding
-            self.nlsize = len(newline)
+            self.newlines = newlines
         def get_split_event(self, payload):
             decoded = payload.decode(self.encoding)
             split = decoded.split(self.delimiter)
-            # strip line end from the end of last chunk TODO: only works for same newline lenghts
-            split[-1] = split[-1][:-self.nlsize]
+            # strip line end from the end of last chunk
+            split[-1] = split[-1].strip(self.newlines)
             return split
 
     def __init__(self):
         self.event_map = EVENT_MAP
-        self.parser = self.EventParser("|", "\n", "utf-8")
+        self.parser = self.EventParser("|", "\r\n", "utf-8")
     def create_event_from(self, payload):
         parsed = self.parser.get_split_event(payload)
         seq, etype = int(parsed[0]), parsed[1]
