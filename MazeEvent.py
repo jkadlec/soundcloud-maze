@@ -13,7 +13,7 @@ class MazeEvent(object, metaclass = abc.ABCMeta):
 
     @staticmethod
     def dispatch(self, followers, users):
-        pass
+        raise NotImplementedError
 
 class FollowEvent(MazeEvent):
     def __init__(self, src, dst, **kwargs):

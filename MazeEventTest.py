@@ -14,6 +14,13 @@ class TestEvent(unittest.TestCase):
         self.factory = MazeEventFactory()
         self.assertTrue(self.factory)
 
+    def test_abc(self):
+        ev = MazeEvent(1, "payload")
+        self.assertTrue(ev)
+
+        with self.assertRaises(NotImplementedError):
+            ev.dispatch({}, {}, {})
+
     def test_factory_valid(self):
         factory = self.factory
 
@@ -80,7 +87,6 @@ class TestEvent(unittest.TestCase):
         ev = factory.create_event_from(b"1|F|3|1\n")
         ev.dispatch(followers, users)
 
-        # TODO: make sure its okay to compare dicts
         self.assertEqual(followers[1], {2:True, 3:True})
 
         # test status update
