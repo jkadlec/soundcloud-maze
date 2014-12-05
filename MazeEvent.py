@@ -4,7 +4,7 @@ import abc
 
 def send_payload(dst, users, payload):
     if dst in users:
-        users[dst].send(payload)
+        users[dst].write(payload)
 
 class MazeEvent(object, metaclass = abc.ABCMeta):
     def __init__(self, seq, payload):
@@ -61,7 +61,7 @@ class StatusEvent(MazeEvent):
 class BroadcastEvent(MazeEvent):
     def dispatch(self, followers, users):
         for u in users.values():
-            u.send(self.payload)
+            u.write(self.payload)
 
 EVENT_MAP = {'F':FollowEvent,
              'U':UnfollowEvent,

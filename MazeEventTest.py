@@ -88,7 +88,7 @@ class TestEvent(unittest.TestCase):
         ev = factory.create_event_from(payload)
         ev.dispatch(followers, users)
         for m in [users[2], users[3]]:
-            m.send.assert_called_with(payload)
+            m.write.assert_called_with(payload)
             m.reset_mock()
 
         # test unsubsribes
@@ -104,14 +104,14 @@ class TestEvent(unittest.TestCase):
         ev = factory.create_event_from(payload)
         ev.dispatch(followers, users)
         for m in users.values():
-            m.send.assert_called_with(payload)
+            m.write.assert_called_with(payload)
             m.reset_mock()
 
         # test private messages
         payload = b"1|P|1|2\n"
         ev = factory.create_event_from(payload)
         ev.dispatch(followers, users)
-        users[2].send.assert_called_with(payload)
+        users[2].write.assert_called_with(payload)
 
         # test that messages to invalid clients are ignored
         payload = b"1|P|1|566\n"
