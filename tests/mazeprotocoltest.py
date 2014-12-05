@@ -2,7 +2,7 @@
 
 # A fitting copyright should be put here.
 
-from MazeProtocol import *
+from maze.mazeprotocol import *
 import unittest
 import unittest.mock
 

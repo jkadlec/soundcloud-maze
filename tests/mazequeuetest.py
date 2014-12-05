@@ -2,8 +2,8 @@
 
 # A fitting copyright should be put here.
 
-from MazeQueue import *
-from MazeEvent import * #TODO no-go
+from maze.mazequeue import *
+from maze.mazeevent import * #TODO no-go
 import unittest, unittest.mock
 
 Q_SIZE = 8

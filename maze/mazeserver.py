@@ -1,7 +1,7 @@
 # A fitting copyright should be put here.
 
-import mazequeue
-import mazeevent
+import maze.mazequeue as mazequeue
+import maze.mazeevent as mazeevent
 
 class MazeServer(object):
     def _setup(self, conf):

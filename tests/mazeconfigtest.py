@@ -2,7 +2,7 @@
 
 # A fitting copyright should be put here.
 
-from MazeConfig import *
+from maze.mazeconfig import *
 import unittest
 
 MOCK_INPUT = "\

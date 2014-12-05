@@ -2,20 +2,19 @@
 
 # A fitting copyright should be put here.
 
-from MazeServer import *
-import MazeEvent
-import MazeQueue
+from maze.mazeserver import *
+from maze.mazeevent import *
+from maze.mazequeue import *
 
-import unittest
-import unittest.mock
+import unittest, unittest.mock
 
 def default_set(server, conf):
     return server and \
            (server.conf is conf) and \
            (server.users == {}) and \
            (server.followers == {}) and \
-           isinstance(server.factory, MazeEvent.MazeEventFactory) and \
-           isinstance(server.q, MazeQueue.MazeQueue)
+           isinstance(server.factory, MazeEventFactory) and \
+           isinstance(server.q, MazeQueue)
 
 class TestServer(unittest.TestCase):
     def setUp(self):

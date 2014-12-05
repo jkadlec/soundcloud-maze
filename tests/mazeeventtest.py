@@ -2,7 +2,7 @@
 
 # A fitting copyright should be put here.
 
-from MazeEvent import *
+from maze.mazeevent import *
 import unittest, unittest.mock
 
 def check_attributes(ev, seq, payload, src = None, dst = None):
