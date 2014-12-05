@@ -1,15 +1,15 @@
 # A fitting copyright should be put here.
 
-import MazeQueue
-import MazeEvent
+import mazequeue
+import mazeevent
 
 class MazeServer(object):
     def _setup(self, conf):
         self.conf = conf
         self.users = {}
         self.followers = {}
-        self.factory = MazeEvent.MazeEventFactory()
-        self.q = MazeQueue.MazeQueue(conf.q_size)
+        self.factory = mazeevent.MazeEventFactory()
+        self.q = mazequeue.MazeQueue(conf.q_size)
 
     def __init__(self, conf):
         self._setup(conf)
