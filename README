@@ -1,0 +1,32 @@
+Needs Python >= 3.4
+
+Run the server with default configuration:
+
+ python3 main.py -c maze.conf
+
+Run unit tests and functional tests (uses follower-maze-2.0.jar):
+
+ ./dotests.sh
+
+Implementation notes:
+
+ - uses Python 3.4 asyncio, namely asyncio.Protocol + loop
+ - fixed size array is used to dispatch incoming events in order
+   - this is the fastest approach I came up with, but the array has to be large enough (default value is 2^20)
+ - there is no dispatcher object in the server, the events dispatch themselves
+ - configuration file handling is done with built-in configparser module, with INI-like files
+ - for what it's worth, unit tests have 100% coverage, except for the main.py file, which I did not test in unit tests (there are ways to do it, but the file is so simple I've decided against it)
+ - there's a git repository in the folder, stages were tagged with 'git tag'
+
+Missing stuff, in order of importance:
+
+ - logging
+ - home-grown functional tests (currently done via follower-maze-2.0.jar, just basic cases)
+ - custom exceptions
+ - stress tests
+ - performance and memory profile
+ - signal handling (configuration reload ...)
+ - multiprocessing
+ - more configuration options
+ - control tool
+
