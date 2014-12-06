@@ -53,10 +53,14 @@ class MazeServer(object):
                transport:  asyncio.transport connected to the client
                data:       data containing user id
         """
-        sp = data.splitlines()
-        client_id = int(sp[0])
-        self.users[client_id] = transport
-        return client_id
+
+        try:
+            sp = data.splitlines()
+            client_id = int(sp[0])
+            self.users[client_id] = transport
+            return client_id
+        except:
+            return None
 
     def remove_client(self, client_id):
         """Removes a client from server user dictionary.
