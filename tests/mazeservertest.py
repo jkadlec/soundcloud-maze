@@ -36,13 +36,20 @@ class TestServer(unittest.TestCase):
         self.assertTrue(default_set(server, conf))
 
     def test_clients(self):
+        # test client addition
         fake_transport = "tr"
         fake_data = b"123\n"
-        self.server.add_client(fake_transport, fake_data)
+        client_id = self.server.add_client(fake_transport, fake_data)
+        self.assertEqual(client_id, 123)
         self.assertEqual(self.server.users, {123:fake_transport})
 
+        # test client removal
         self.server.remove_client(123)
         self.assertEqual(self.server.users, {})
+
+        # test bogus client addition
+        client_id = self.server.add_client(fake_transport, b"bogus\n")
+        self.assertIsNone(client_id)
 
     def test_events(self):
         # test both unix and windows newlines
