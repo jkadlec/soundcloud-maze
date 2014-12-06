@@ -53,7 +53,6 @@ class MazeServer(object):
                transport:  asyncio.transport connected to the client
                data:       data containing user id
         """
-
         try:
             sp = data.splitlines()
             client_id = int(sp[0])
