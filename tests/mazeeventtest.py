@@ -45,7 +45,7 @@ class TestEvent(unittest.TestCase):
         # create private message event
         payload = b"126|P|11|12\n"
         ev = factory.create_event_from(payload)
-        self.assertTrue(isinstance(ev, MsgEvent))
+        self.assertTrue(isinstance(ev, MessageEvent))
         self.assertTrue(check_attributes(ev, 126, payload, dst=12))
 
         # create status update event
