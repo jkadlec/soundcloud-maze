@@ -1,35 +1,41 @@
 # A fitting copyright should be put here.
 
-class MazeQueue(object):
-    class ModIndex(object):
-        def __init__(self, mod, val):
+class ModIndex(object):
+        def __init__(self, mod):
             self.mod = mod
-            self.val = val % mod
+
+        def set(self, val):
+            self.val = val % self.mod
 
         def inc(self):
             self.val = (self.val + 1) % self.mod
 
+class MazeQueue(object):
     def __init__(self, max_size):
-        self.max_size = max_size # TODO: change to next power of 2
+        self.max_size = max_size
         self.last_valid = 0
         self.q = [None] * max_size
+        self.modder = ModIndex(max_size)
 
     def add_and_process(self, item, followers, users):
-        # TODO not pretty
-        index = MazeQueue.ModIndex(self.max_size, item.seq)
-        current = self.q[index.val]
+        mod = self.modder
+        mod.set(item.seq)
+        current = self.q[mod.val]
         if current:
             # cannot wait any longer
             current.dispatch(followers, users)
 
-        self.q[index.val] = item
+        self.q[mod.val] = item
 
         # try to dispatch all events that are in order
-        index = MazeQueue.ModIndex(self.max_size, self.last_valid + 1)
-        while self.q[index.val]:
-            ev = self.q[index.val]
+        mod.set(self.last_valid + 1)
+        while self.q[mod.val]:
+            ev = self.q[mod.val]
             ev.dispatch(followers, users)
-            self.q[index.val] = None
+
+            # clear place in queue
+            self.q[mod.val] = None
+
             self.last_valid = ev.seq
-            index.inc()
+            mod.inc()
 
