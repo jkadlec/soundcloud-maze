@@ -17,9 +17,13 @@ class MazeServer(object):
     def process_events(self, data):
         sp = data.splitlines(True)
         for line in sp:
-            ev = self.factory.create_event_from(line)
-            if ev:
-                self.q.add_and_process(ev, self.followers, self.users)
+            try:
+                ev = self.factory.create_event_from(line)
+                if ev:
+                    self.q.add_and_process(ev, self.followers, self.users)
+            except:
+                # silently ignore malformed data
+                pass
 
     def add_client(self, transport, data):
         sp = data.splitlines()
